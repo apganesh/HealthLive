@@ -1,4 +1,3 @@
-# spark-submit --packages org.apache.spark:spark-streaming-kafka-0-8_2.11:2.1.0 elasticsearch1.py
 from elasticsearch import Elasticsearch
 from pyspark import SparkContext
 from pyspark.streaming import StreamingContext
@@ -98,7 +97,7 @@ def parseStream(item):
 if __name__=='__main__':
     sc = SparkContext(appName="Pos_Spark-Streaming")
     ssc = StreamingContext(sc, 1)
-    kafkaStream = KafkaUtils.createStream(ssc,"172.31.1.5:2181", "spark-streaming-group", {"posTest": 1})
+    kafkaStream = KafkaUtils.createStream(ssc,"xxxxxx:2181", "spark-streaming-group", {"posTest": 1})
     posStream = kafkaStream.map(lambda x:x[1])
     posDataRDD = posStream.flatMap(lambda x: parseStream(x)).reduceByKey(lambda a,b: (int(a)+int(b)))
     es = Elasticsearch("http://xxxxxxx:9200")

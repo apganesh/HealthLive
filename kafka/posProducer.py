@@ -1,4 +1,3 @@
-# bash spawn_kafka_streams.sh 172.31.1.4 1 new
 import random
 import sys
 import six
