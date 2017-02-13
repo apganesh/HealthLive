@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block content %}
+<head>
+    <style>
+      #map {
+        height: 400px;
+        width: 100%;
+       }
+      /* The alert message box */
+.alert {
+    padding: 20px;
+    background-color: #f44336; /* Red */
+    color: white;
+    margin-bottom: 15px;
+}
+
+/* The close button */
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* When moving the mouse over the close button */
+.closebtn:hover {
+    color: black;
+}
+    </style>
+  </head>
+  <body>
+    <h3>User View: Drag the Marker to select User Location</h3>
+     Lat:
+    <input id="lat" name="lat" val="40.713956" />
+     Long:
+    <input id="long" name="long" val="74.006653" />
+    <br />
+    <br />
+    <div id="map"></div>
+    <div class="alert" id="alert">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      This is an alert box that shows the diseases prevalent within 5 Mile radius of User Location.
+    </div>
+    <h3>Geohash Map with real time count of cases by Disease</h3>
+<iframe src="http://xxxxxxxx:5601/app/kibana#/dashboard/HealthLive?embed=true&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-5y,mode:quick,to:now))&_a=(filters:!(),options:(darkTheme:!f),panels:!((col:1,id:HealthMap,panelIndex:1,row:1,size_x:12,size_y:5,type:visualization),(col:1,id:running-count,panelIndex:2,row:6,size_x:12,size_y:1,type:visualization)),query:(query_string:(analyze_wildcard:!t,query:'*')),title:HealthLive,uiState:(P-1:(mapCenter:!(40.74803725830298,-73.96717071533203),mapZoom:12)))" height="600" width="100%"></iframe>
+
+    <script>
+      function initMap() {
+        var myLatlng = {lat: 40.713956, lng: -74.006653};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 15,
+          center: myLatlng,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+        var marker = new google.maps.Marker({
+            draggable: true,
+            position: myLatlng,
+            map: map,
+            title: "Your location"
+        });
+
+        google.maps.event.addListener(marker, 'dragend', function (event) {
+            document.getElementById("lat").value = event.latLng.lat();
+            document.getElementById("long").value = event.latLng.lng();
+
+            var url = '/getDiseases?lat=' + event.latLng.lat() + '&lng=' + event.latLng.lng();
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", url, true);
+            xhr.onload = function (e) {
+              if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    console.log(xhr.responseText);
+                    document.getElementById("alert").innerHTML = xhr.responseText;
+                } else {
+                    console.error(xhr.statusText);
+                }
+              }
+            };
+            xhr.send(null);
+        });
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=xxxxxx&callback=initMap">
+    </script>
+  </body>
+</html>
+{% endblock %}
