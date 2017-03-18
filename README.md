@@ -1,5 +1,5 @@
 # HealthLive
-###Insight Data Engineering Project
+### Insight Data Engineering Project
 ======================================
 
 ## A Near Real Time Sickness Tracker 
@@ -12,7 +12,7 @@ Demo - [www.healthlive.site/](http://www.healthlive.site/)
 
 Just as Doppler radar scans the skies for indicators of bad weather, HealthLive scans the drug sales at pharmacies across the globe for indicators of illness, allowing you to check for the chance of sickness as easily as you can check for chance of rain. 
 
-![HealthLive Features] (images/healthLive.png)
+![HealthLive Features](images/healthLive.png)
 
 # Motivation behind HealthLive 
 
@@ -33,8 +33,8 @@ Drug sales data may earlier capture changing population health status, as over-t
      - AWS EC2
 
 
-![HealthLive User View] (images/userView.png)
-![Kibana Geo Hash Map] (images/kibana.png)
+![HealthLive User View](images/userView.png)
+![Kibana Geo Hash Map](images/kibana.png)
 
 
 # HealthLive Approach
